@@ -1,0 +1,30 @@
+name: deploy site wordpress
+
+on:
+  workflow_dispatch
+
+jobs:
+  deploy: ubuntu-latest
+  environment: production
+  steps:
+      - name: Checkout
+        uses: actions/checkout@v2      
+      - name: Deploy my site to Server
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }} 
+          ARGS: -avz --delete --exclude='*.pyc' 
+          SERVER_PORT: "22" 
+          FOLDER: ./ 
+          SERVER_IP: ${{ secrets.SSH_HOST }} 
+          USERNAME: ${{ secrets.SSH_USERNAME }}
+          SERVER_DESTINATION: ${{ secrets.SITE_FOLDER }}
+                - name: Execute Script
+        uses: appleboy/ssh-action@master
+        with: 
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd /var/www/projet_shaodan
+            docker-compose up -d
