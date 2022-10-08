@@ -28,4 +28,3 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             cd /var/www/projet_shaodan
-            docker-compose up -d
