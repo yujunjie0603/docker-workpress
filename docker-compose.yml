@@ -18,7 +18,7 @@ services:
     env_file: .env
     image: wordpress:php7.4-apache
     volumes:
-      - wp_data: ${PATH_VOLUME_WS}
+      - wp_data:${PATH_VOLUME_WS}
     ports:
       - 8081:80
     restart: always
